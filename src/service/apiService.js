@@ -12,6 +12,7 @@ class API {
         })
         return await res.json();
     }
+
     async fetchAllStudents(token) {
         const res = await fetch('/api/v1/student/all', {
             method: 'get',
@@ -22,7 +23,11 @@ class API {
         })
         return await res.json();
     }
+
     async fetchStudent(token, userId) {
+        if (this.utils.hasEmpty(arguments)) {
+            return  [];
+        }
         const res = await fetch('/api/v1/student/' + userId, {
             method: 'get',
             headers: new Headers({
@@ -32,7 +37,11 @@ class API {
         })
         return await res.json();
     }
+
     async fetchInstructor(token, userId) {
+        if (this.utils.hasEmpty(arguments)) {
+            return  [];
+        }
         const res = await fetch('/api/v1/instructor/' + userId, {
             method: 'get',
             headers: new Headers({
@@ -42,8 +51,12 @@ class API {
         })
         return await res.json();
     }
+
     async fetchAllExams(token, studentId) {
-        const res = await fetch('/api/v1/exam/all?studentId='+ studentId, {
+        if (this.utils.hasEmpty(arguments)) {
+            return  [];
+        }
+        const res = await fetch('/api/v1/exam/all?studentId=' + studentId, {
             method: 'get',
             headers: new Headers({
                 'Authorization': 'Bearer ' + token,
@@ -52,8 +65,12 @@ class API {
         })
         return await res.json();
     }
+
     async fetchAllExamsBooking(token, studentId) {
-        const res = await fetch('/api/v1/exambooking/all?studentId='+ studentId, {
+        if (this.utils.hasEmpty(arguments)) {
+            return  [];
+        }
+        const res = await fetch('/api/v1/exambooking/all?studentId=' + studentId, {
             method: 'get',
             headers: new Headers({
                 'Authorization': 'Bearer ' + token,
@@ -62,7 +79,11 @@ class API {
         })
         return await res.json();
     }
+
     async addExamBooking(token, data) {
+        if (this.utils.hasEmpty(arguments)) {
+            return  [];
+        }
         const res = await fetch('/api/v1/exambooking/new', {
             method: 'post',
             headers: new Headers({
@@ -73,6 +94,18 @@ class API {
         })
         return await res.json();
     }
+
+    utils = {
+        hasEmpty(args) {
+            for (let i = 0; i < args.length; i++) {
+                if (args[i] === null) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
 }
+
 const APIS = new API()
 export default APIS;
