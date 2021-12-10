@@ -7,6 +7,9 @@ export const ExamList = ({ list, token, studentId }) => {
         target.style.display = "none";
         APIS.addExamBooking(token, { studentId: studentId, examId: item.id })
     }
+    if (!studentId){
+        return null;
+    }
     return (
         <div>
             <ul>
